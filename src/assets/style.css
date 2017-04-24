@@ -1,0 +1,15 @@
+@import url(./normalize.css);
+@import url(./bulma.css);
+
+.login-form {
+    margin-top: 3em;
+}
+.app-content {
+    
+}
+.Header {
+    padding: 2em 1em;
+}
+.generic-form {
+    padding: 0 1em;
+}
