@@ -1,11 +1,14 @@
 <template>
     <div>
+        <div class="notification" :class="[reg_result ? 'is-success' : 'is-danger']" v-show="show_notif">
+            {{ reg_message }}
+        </div>
         <div class="columns">
             <div class="column is-one-third">
                 <div class="field">
                     <label class="label">Card ID</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="cardinfo.card_id">
+                        <input class="input" type="text" v-model="cardinfo.tag_id">
                     </p>
                 </div>
                 <div class="field">
@@ -124,6 +127,9 @@
                     <p class="control level-right">
                         <button class="button is-primary is-medium" @click.prevent="saveCard">Register Card</button>
                     </p>
+                    <p class="control level-right" v-show="!show_notif">
+                        {{reg_message}}
+                    </p>
                     <br>
                 </div>
             </div>
@@ -137,7 +143,6 @@
     export default {
         data() {
             return {
-                store_id: '',
                 card: {
                     uid: '',
                     firstname: '',
@@ -152,6 +157,9 @@
                     birthdate: '',
                     civilstatus: ''
                 },
+                show_notif: false,
+                reg_result: '',
+                reg_message: ''
             }
         },
 
@@ -194,8 +202,13 @@
 
             saveCard() {
                 let vm = this
-                vm.card.uid = vm.cardinfo.card_id
+                vm.card.uid = vm.cardinfo.tag_id
                 let card_info = vm.card
+
+                vm.reg_result = ''
+                vm.show_notif = false
+                vm.reg_message = 'Saving registration...'
+
                 console.log(card_info)
 
                 let datenow = Date.now()
@@ -205,8 +218,8 @@
                     nextyear = nextyear.toString()
                     nextyear = nextyear.slice(-2)
 
-                let now_minute = current_date.getMinutes()
-                    now_minute = ('0' + now_minute).slice(-2)
+                let now_hour = current_date.getHours()
+                    now_hour = ('0' + now_hour).slice(-2)
                 let now_day = current_date.getDate()
                     now_day = ('0' + now_day).slice(-2)
                 let now_month = current_date.getMonth() + 1
@@ -217,26 +230,38 @@
 
                 let exp_date = now_day + now_month + nextyear
 
-                let lastdateupdate = now_minute + '' + now_day + '' + now_month + '' + now_year
+                let lastdateupdate = now_hour + '' + now_day + '' + now_month + '' + now_year
 
-                /**
-                 * Write initial data to NFC card
-                 * Format: {userid};{points};{amount};{timestamp};{storeid};{expiry}
-                 * Format: {userid};{points};{amount};{min-day-month-year};{storeid};{day-month-year}
-                 */
-                let nfc_data = '1213;1000;1000;' + lastdateupdate + ';1000;' + exp_date
-
-                vm.$http.post('api/customer', card_info).then((response) => {
+                vm.$http.post('customer', card_info).then((response) => {
                     console.log(response.data)
                     if (response.status == 200) {
                         if (response.data.result){
-                            this.$nfc.writeNdefTag('text', nfc_data)
+
+                            /**
+                             * Write initial data to NFC card
+                             * Format: {points};{amount};{timestamp};{storeid};{expiry}
+                             * Format: {points};{amount};{min-day-month-year};{storeid};{day-month-year}
+                             */
+
+                            let c_points = response.data.customer.points
+                            let c_amount = response.data.customer.amount
+                            let store_id = response.data.card.store_id
+                            let nfc_data = c_points + ';' + c_amount + ';' + lastdateupdate + ';' + store_id + ';' + exp_date
+
+                            vm.$nfc.writeNdefTag('text', nfc_data)
+
+                            vm.reg_result = response.data.result
+                            vm.reg_message = response.data.message
                         } else {
-                            alert(response.data.message)
+                            vm.reg_result = response.data.result
+                            vm.reg_message = response.data.message
                         }
+                        vm.show_notif = true
                     }
                 }).catch(function (error) {
-                    console.log(error);
+                    vm.show_notif = true
+                    vm.reg_result = false
+                    vm.reg_message = error
                 });
             }
         },

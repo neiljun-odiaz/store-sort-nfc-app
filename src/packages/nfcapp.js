@@ -29,21 +29,23 @@ export default function (Vue){
                         tag_id = tag_info.tag_id
                         if (tag_info.new_card) {
                             store.state.card_info = {
-                                user_id: '',
-                                card_id: tag_id,
+                                tag_id: tag_id,
                                 points: 0,
-                                last_date_updated: '',
-                                store_id: ''
+                                amount: 0,
+                                last_updated: '',
+                                store_id: '',
+                                expiry: ''
                             }
                         } else {
                             var info = tag_info.text.split(";")
                             console.log(info)
                             store.state.card_info = {
-                                user_id: info[0],
-                                card_id: tag_id,
+                                tag_id: tag_id,
                                 points: info[1],
-                                last_date_updated: info[2],
-                                store_id: info[3]
+                                amount: info[2],
+                                last_updated: info[3],
+                                store_id: info[4],
+                                expiry: info[5]
                             }
                         }
                     }
@@ -63,11 +65,12 @@ export default function (Vue){
                     console.log('NFC Tag written!')
                     var info = ndefValue.split(";")
                     store.state.card_info = {
-                        user_id: info[0],
-                        card_id: tag_id,
+                        tag_id: tag_id,
                         points: info[1],
-                        last_date_updated: info[2],
-                        store_id: info[3]
+                        amount: info[2],
+                        last_updated: info[3],
+                        store_id: info[4],
+                        expiry: info[5]
                     }
                     console.log(ndef)
                     console.log(info)
@@ -126,11 +129,12 @@ export default function (Vue){
 
         resetCardInfo () {
             store.state.card_info = {
-                user_id: '',
-                card_id: '',
-                points: 0,
-                last_date_updated: '',
-                store_id: ''
+                tag_id: '',
+                points: '',
+                amount: '',
+                last_updated: '',
+                store_id: '',
+                expiry: ''
             }
         },
 

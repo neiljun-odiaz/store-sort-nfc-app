@@ -16,20 +16,30 @@ class CustomerController extends Controller
                 $input = $request->all();
 
                 // Check if Card is pre-registered.
-                // $card = Card::where('uid', $input['uid'])->first();
-                // if (!$card) {
-                //     $result = array(
-                //         'result' => false,
-                //         'message' => 'Card Unknown!'
-                //     );
-                //     return response($result);
-                // }
+                $card = Card::where('uid', $input['uid'])->first();
+                if (!$card) {
+                    $result = array(
+                        'result' => false,
+                        'message' => 'Card Unknown!'
+                    );
+                    return response($result);
+                }
+
+                // Check if card already taken or already registered by other customer
+                $customer_check = Customer::where('card_id', $card->id)->count();
+                if ($customer_check > 0) {
+                    $result = array(
+                        'result' => false,
+                        'message' => 'Card Already taken!'
+                    );
+                    return response($result);
+                }
 
                 $today = Carbon\Carbon::now();
 
                 // Create new Customer
                 $customer = new Customer;
-                $customer->card_id = 1;
+                $customer->card_id = $card->id;
                 $customer->firstname = $input['firstname'];
                 $customer->lastname = $input['lastname'];
                 $customer->pin = $input['pin'];
@@ -43,17 +53,17 @@ class CustomerController extends Controller
                 $customer->points = 0;
                 $customer->amount = 0;
                 $customer->is_active = true;
-                // $customer->save();
+                $customer->save();
 
                 // Update Card Info
-                // $card->date_registered = $today;
-                // $card->date_expiration = $today->addYear();
-                // $card->save();
+                $card->date_registered = $today;
+                $card->date_expiration = $today->addYear();
+                $card->save();
 
                 $result = array(
                     'result' => true,
                     'message' => 'Card Registered!',
-                    'card' => '',
+                    'card' => $card,
                     'customer' => $customer
                 );
             } catch(\Exception $e) {

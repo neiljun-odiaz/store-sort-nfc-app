@@ -21,40 +21,25 @@ class CardController extends Controller
         return response($cards);
     }
 
-    public function update(Request $request)
+    public function import(Request $request)
     {
         try {
-            $input = $request->all();
+            $cards = $request->all();
 
-            // Check if Card is pre-registered.
-            $card = Card::where('uid', $input['uid'])->first();
-            if (!$card) {
-                $result = array(
-                    'result' => false,
-                    'message' => 'Card Unknown!'
-                );
-                return response($result);
+            foreach($cards as $card){
+                $s_card = new Card;
+                $s_card->uid = $card['uid'];
+                $s_card->batch_key = $card['batch_key'];
+                $s_card->store_id = $card['store_id'];
+                $s_card->date_registered = $card['date_registered'];
+                $s_card->date_expiration = $card['date_expiration'];
+                $s_card->is_imported = true;
+                $s_card->is_active = true;
+                $s_card->save();
             }
-
-            $today = Carbon\Carbon::now();
-
-            $card->holder_name = $input['holdername'];
-            $card->pin = $input['pin'];
-            $card->contact_number = $input['contact'];
-            $card->email_address = $input['email'];
-            $card->address = $input['address'];
-            $card->age = $input['age'];
-            $card->sex = $input['sex'];
-            $card->birth_date = $input['birthdate'];
-            $card->civil_status = $input['civilstatus'];
-            $card->date_registered = $today;
-            $card->date_expiration = $today->addYear();
-            $card->save();
-
             $result = array(
                     'result' => true,
-                    'message' => 'Card Registered!',
-                    'card' => $card
+                    'message' => 'Card Imported!'
                 );
         } catch(\Exception $e) {
             $result = array(

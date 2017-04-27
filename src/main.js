@@ -7,6 +7,9 @@ import {store} from './store.js'
 
 import Home from './components/pages/Home.vue'
 import CustomerReg from './components/pages/CustomerReg.vue'
+import ImportCard from './components/pages/ImportCard.vue'
+import CardDetails from './components/pages/CardDetails.vue'
+import Products from './components/pages/Products.vue'
 
 import NFCApp from './packages/nfcapp.js'
 import Auth from './packages/auth.js'
@@ -17,7 +20,7 @@ Vue.use(VueAxios, axios)
 Vue.use(NFCApp)
 Vue.use(Auth)
 
-axios.defaults.baseURL = 'http://localhost:9010'
+axios.defaults.baseURL = 'http://localhost:9020/api'
 
 const router = new VueRouter({
     routes: [
@@ -28,6 +31,18 @@ const router = new VueRouter({
         {
             path: '/customer-reg',
             component: CustomerReg
+        },
+        {
+            path: '/import-card',
+            component: ImportCard
+        },
+        {
+            path: '/card-details',
+            component: CardDetails
+        },
+        {
+            path: '/products',
+            component: Products
         }
     ]
 })

@@ -17,7 +17,7 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'api'], function () use ($app) {
     // Cards
-    $app->post('card/update', 'CardController@update');
+    $app->post('card/import', 'CardController@import');
 
     // Customer
     $app->post('customer', 'CustomerController@store');
