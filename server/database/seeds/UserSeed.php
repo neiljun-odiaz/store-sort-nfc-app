@@ -12,8 +12,8 @@ class UserSeed extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => 'sort_admin',
-            'password' => bcrypt('sort_@dmin'),
+            'username' => 'store_admin',
+            'password' => app('hash')->make('store_@dmin'),
             'api_token' => str_random(40),
             'created_at' => Carbon\Carbon::now(),
             'updated_at' => Carbon\Carbon::now(),

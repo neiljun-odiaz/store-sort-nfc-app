@@ -5,11 +5,17 @@ import VueAxios from 'vue-axios'
 import App from './App.vue'
 import {store} from './store.js'
 
+// Cashier/Store User
 import Home from './components/pages/Home.vue'
 import CustomerReg from './components/pages/CustomerReg.vue'
-import ImportCard from './components/pages/ImportCard.vue'
 import CardDetails from './components/pages/CardDetails.vue'
-import Products from './components/pages/Products.vue'
+
+// Admin User
+import Login from './components/auth/Login.vue'
+import Admin from './components/pages/admin/Admin.vue'
+import ImportCard from './components/pages/admin/ImportCard.vue'
+import Products from './components/pages/admin/Products.vue'
+import Settings from './components/pages/admin/Settings.vue'
 
 import NFCApp from './packages/nfcapp.js'
 import Auth from './packages/auth.js'
@@ -22,6 +28,14 @@ Vue.use(Auth)
 
 axios.defaults.baseURL = 'http://localhost:9020/api'
 
+// TODO: Uncomment for Production
+// Vue.auth.isAuthenticated().then((result)=>{
+//     if (result) {
+//         let auth_token = JSON.parse(result)
+//         axios.defaults.headers.common['Authorization'] = auth_token.value
+//     }
+// });
+
 const router = new VueRouter({
     routes: [
         {
@@ -33,19 +47,63 @@ const router = new VueRouter({
             component: CustomerReg
         },
         {
-            path: '/import-card',
-            component: ImportCard
-        },
-        {
             path: '/card-details',
             component: CardDetails
         },
+
+        // Admin Routes
+        {
+            path: '/admin',
+            component: Admin,
+            meta: {
+                forAuth: true
+            }
+        },
         {
             path: '/products',
-            component: Products
+            component: Products,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: '/import-card',
+            component: ImportCard,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: '/settings',
+            component: Settings,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: '/login',
+            component: Login
         }
     ]
 })
+
+// TODO: Uncomment for Production
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.forAuth)) {
+//         let is_auth = Vue.auth.isAuthenticated()
+//         is_auth.then((result)=>{
+//             if (!result) {
+//                 next({
+//                     path: '/login'
+//                 })
+//             } else {
+//                 next()
+//             }
+//         });
+//     } else {
+//         next()
+//     }
+// })
 
 new Vue({
     el: '#app',

@@ -21,4 +21,10 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     // Customer
     $app->post('customer', 'CustomerController@store');
+
+    // Products
+    $app->get('product/all', 'ProductController@index');
+    $app->post('product', 'ProductController@store');
+    $app->post('product/update', 'ProductController@update');
+    $app->post('product/delete', 'ProductController@destroy');
 });

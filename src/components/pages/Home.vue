@@ -6,6 +6,7 @@
                <button class="button is-primary" @click.prevent="goTo('/products')">Product</button>
                <button class="button is-primary" @click.prevent="goTo('/import-card')">Import Cards</button>
                <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Details</button>
+               <button class="button is-primary" @click.prevent="goTo('/points-setup')">Points Setup</button>
             </div>
        </div>
     </div>
