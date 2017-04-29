@@ -15,6 +15,8 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
+//TODO: For Admin routes, wrap it with auth middleware
+
 $app->group(['prefix' => 'api'], function () use ($app) {
     // Cards
     $app->post('card/import', 'CardController@import');
@@ -27,4 +29,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('product', 'ProductController@store');
     $app->post('product/update', 'ProductController@update');
     $app->post('product/delete', 'ProductController@destroy');
+
+    //Settings
+    $app->post('settings', 'SettingController@store');
+    $app->post('settings/fetch', 'SettingController@fetchSetting');
 });

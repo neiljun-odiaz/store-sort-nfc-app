@@ -15,6 +15,12 @@
                     </p>
                 </div>
                 <div class="field">
+                    <label class="label">Inventory</label>
+                    <p class="control">
+                        <input class="input" type="number" min="0" v-model="product.inventory">
+                    </p>
+                </div>
+                <div class="field">
                     <p class="control">
                         <button class="button is-primary" @click.prevent="saveProduct">Save Product</button>
                     </p>
@@ -30,6 +36,7 @@
                             <tr>
                                 <th>Product Name</th>
                                 <th>Price</th>
+                                <th>Inventory</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -37,6 +44,7 @@
                             <tr v-for="(product, index) in products">
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.price }}</td>
+                                <td>{{ product.inventory }}</td>
                                 <td class="List__item--action">
                                     <button class="button is-info is-small" @click.prevent="showUpdateModal(product, index)"><i class="fa fa-edit"></i></button>
                                     <button class="button is-danger is-small" @click.prevent="showDeleteModal(product, index)"><i class="fa fa-trash-o"></i></button>
@@ -65,6 +73,12 @@
                             <label class="label">Price</label>
                             <p class="control">
                                 <input class="input" type="number" min="0" step="any" v-model="tmp_product.price">
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Inventory</label>
+                            <p class="control">
+                                <input class="input" type="number" min="0" step="any" v-model="tmp_product.inventory">
                             </p>
                         </div>
                         <div class="field">
@@ -115,6 +129,7 @@
                 product: {
                     name: '',
                     price: '',
+                    inventory: ''
                 },
                 tmp_product: {},
                 products: [],
@@ -141,6 +156,7 @@
                         this.product = {
                             name: '',
                             price: '',
+                            inventory: ''
                         }
                     }
                     this.show_notif = true

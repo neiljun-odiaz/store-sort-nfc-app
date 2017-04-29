@@ -23,6 +23,7 @@ class ProductController extends Controller
             $product = new Product();
             $product->name = $input['name'];
             $product->price = $input['price'];
+            $product->inventory = $input['inventory'];
             $product->save();
 
             $result = array(
@@ -48,6 +49,7 @@ class ProductController extends Controller
             $product = Product::find( $input['id'] );
             $product->name = $input['name'];
             $product->price = $input['price'];
+            $product->inventory = $input['inventory'];
             $product->save();
 
             $result = array(

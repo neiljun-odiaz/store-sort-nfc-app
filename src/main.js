@@ -74,7 +74,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/settings',
+            path: '/points-setup',
             component: Settings,
             meta: {
                 forAuth: true
