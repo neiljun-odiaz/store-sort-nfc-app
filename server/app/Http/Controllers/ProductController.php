@@ -24,6 +24,7 @@ class ProductController extends Controller
             $product->name = $input['name'];
             $product->price = $input['price'];
             $product->inventory = $input['inventory'];
+            $product->is_active = true;
             $product->save();
 
             $result = array(

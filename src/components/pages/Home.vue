@@ -1,14 +1,26 @@
 <template>
     <div>
-        <div class="columns is-mobile">
-            <div class="column is-one-half is-offset-one-quarter">
-               <button class="button is-primary" @click.prevent="goTo('/customer-reg')">Customer Registration</button>
-               <button class="button is-primary" @click.prevent="goTo('/products')">Product</button>
-               <button class="button is-primary" @click.prevent="goTo('/import-card')">Import Cards</button>
-               <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Details</button>
-               <button class="button is-primary" @click.prevent="goTo('/points-setup')">Points Setup</button>
+        <div class="columns is-mobile is-centered">
+            <div class="column has-text-centered">
+                <button class="button is-primary" @click.prevent="goTo('/customer-reg')">Customer Registration</button>
+                <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Details</button>
+                <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Tool</button>
+                <button class="button is-primary" @click.prevent="goTo('/card-details')">Cashless Loading</button>
+                <button class="button is-primary" @click.prevent="goTo('/card-details')">Reward Redemption</button>
+                <button class="button is-primary" @click.prevent="goTo('/card-details')">POS</button>
+                <button class="button is-primary" @click.prevent="goTo('/card-details')">Reports</button>
             </div>
-       </div>
+        </div>
+        <div class="columns is-mobile is-centered">
+            <div class="column has-text-centered">
+                <button class="button is-warning" @click.prevent="goTo('/products')">Product</button>
+                <button class="button is-warning" @click.prevent="goTo('/import-card')">Import Cards</button>
+                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Points Setup</button>
+                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Rewards Setup</button>
+                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Reports</button>
+                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Users</button>
+            </div>
+        </div>
     </div>
 </template>
 <style>
@@ -25,6 +37,7 @@
         margin: 0 0 10px;
         padding: 0;
     }
+
 </style>
 <script>
     export default {
@@ -48,4 +61,5 @@
             
         }
     }
+
 </script>
