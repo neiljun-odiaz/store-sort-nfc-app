@@ -15,16 +15,21 @@ import Login from './components/auth/Login.vue'
 import Admin from './components/pages/admin/Admin.vue'
 import ImportCard from './components/pages/admin/ImportCard.vue'
 import Products from './components/pages/admin/Products.vue'
-import Settings from './components/pages/admin/Settings.vue'
+import PointsSetup from './components/pages/admin/PointsSetup.vue'
+import RewardsSetup from './components/pages/admin/RewardsSetup.vue'
 
 import NFCApp from './packages/nfcapp.js'
 import Auth from './packages/auth.js'
+
+import Modal from './components/partials/Modal.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 
 Vue.use(NFCApp)
 Vue.use(Auth)
+
+Vue.component('modal', Modal)
 
 axios.defaults.baseURL = 'http://localhost:9020/api'
 
@@ -51,7 +56,7 @@ const router = new VueRouter({
             component: CardDetails
         },
 
-        // Admin Routes
+        // ======= Admin Routes ======= //
         {
             path: '/admin',
             component: Admin,
@@ -75,7 +80,14 @@ const router = new VueRouter({
         },
         {
             path: '/points-setup',
-            component: Settings,
+            component: PointsSetup,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: '/rewards-setup',
+            component: RewardsSetup,
             meta: {
                 forAuth: true
             }

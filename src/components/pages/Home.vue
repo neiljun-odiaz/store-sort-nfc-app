@@ -16,9 +16,9 @@
                 <button class="button is-warning" @click.prevent="goTo('/products')">Product</button>
                 <button class="button is-warning" @click.prevent="goTo('/import-card')">Import Cards</button>
                 <button class="button is-warning" @click.prevent="goTo('/points-setup')">Points Setup</button>
-                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Rewards Setup</button>
-                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Reports</button>
-                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Users</button>
+                <button class="button is-warning" @click.prevent="goTo('/rewards-setup')">Rewards Setup</button>
+                <button class="button is-warning" @click.prevent="goTo('/admin-reports')">Reports</button>
+                <button class="button is-warning" @click.prevent="goTo('/user-setup')">Users</button>
             </div>
         </div>
     </div>

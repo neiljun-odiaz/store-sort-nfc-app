@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="Header">
-        <h2><a href="" @click.prevent="$router.push('/')">Home</a></h2>
-        <h2><a href="" @click.prevent="$router.push('/admin')">Admin</a></h2>
+        <h2><a href="" @click.prevent="$router.push('/')">Home</a> | <a href="" @click.prevent="$router.push('/admin')">Admin</a></h2>
     </div>
     
     <router-view></router-view>

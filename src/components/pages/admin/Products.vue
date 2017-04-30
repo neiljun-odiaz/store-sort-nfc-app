@@ -57,59 +57,37 @@
         </div>
 
         <!-- Update Modal -->
-        <div class="modal" :class="{'is-active': isUpdating}">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="box">
-                    <h1 class="title is-4">Updating Product</h1>
-                    <form action="">
-                        <div class="field">
-                            <label class="label">Product Name</label>
-                            <p class="control">
-                                <input class="input" type="text" v-model="tmp_product.name">
-                            </p>
-                        </div>
-                        <div class="field">
-                            <label class="label">Price</label>
-                            <p class="control">
-                                <input class="input" type="number" min="0" step="any" v-model="tmp_product.price">
-                            </p>
-                        </div>
-                        <div class="field">
-                            <label class="label">Inventory</label>
-                            <p class="control">
-                                <input class="input" type="number" min="0" step="any" v-model="tmp_product.inventory">
-                            </p>
-                        </div>
-                        <div class="field">
-                            <p class="control">
-                                <button class="button is-primary" @click.prevent="updateProduct">Update Product</button>
-                                <button class="button" @click.prevent="closeModal">Close</button>
-                            </p>
-                        </div>
-                    </form>
+        <modal v-if="isUpdating" @closeModal="closeModal" @proceedModal="updateProduct">
+            <span slot="title">Edit Product</span>
+            <form slot="content">
+                <div class="field">
+                    <label class="label">Product Name</label>
+                    <p class="control">
+                        <input class="input" type="text" v-model="tmp_product.name">
+                    </p>
                 </div>
-            </div>
-            <button class="modal-close" @click.prevent="closeModal"></button>
-        </div>
+                <div class="field">
+                    <label class="label">Price</label>
+                    <p class="control">
+                        <input class="input" type="number" min="0" step="any" v-model="tmp_product.price">
+                    </p>
+                </div>
+                <div class="field">
+                    <label class="label">Inventory</label>
+                    <p class="control">
+                        <input class="input" type="number" min="0" step="any" v-model="tmp_product.inventory">
+                    </p>
+                </div>
+            </form>
+            <span slot="proceed-name">Update Product</span>
+        </modal>
 
-        <!-- Delete Modal -->
-        <div class="modal" :class="{'is-active': isDeleting}">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="box">
-                    <h1 class="title is-4">Delete Product</h1>
-                    <p>Do you want to delete <strong>{{ tmp_product.name }}</strong>?</p>
-                    <div class="field">
-                        <p class="control">
-                            <button class="button is-danger" @click.prevent="deleteProduct">Delete</button>
-                            <button class="button" @click.prevent="closeModal">Close</button>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <button class="modal-close" @click.prevent="closeModal"></button>
-        </div>
+        <!--Delete Modal-->
+        <modal v-if="isDeleting" @closeModal="closeModal" @proceedModal="deleteProduct">
+            <span slot="title">Delete Product</span>
+            <p slot="content">Do you want to delete <strong>{{ tmp_product.name }}</strong>?</p>
+            <span slot="proceed-name">Delete</span>
+        </modal>
 
 
     </div>

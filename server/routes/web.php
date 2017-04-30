@@ -33,4 +33,8 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     //Settings
     $app->post('settings', 'SettingController@store');
     $app->post('settings/fetch', 'SettingController@fetchSetting');
+
+    // Rewards Setup
+    $app->post('reward', 'RewardController@store');
+    $app->get('reward/all', 'RewardController@all');
 });
