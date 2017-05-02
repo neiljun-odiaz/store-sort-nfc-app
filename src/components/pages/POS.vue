@@ -207,6 +207,7 @@
                             vm.save_result = response_data.result
                             vm.save_message = response_data.message
                             vm.updateCardInfo()
+                            vm.resetFields()
                         }
                     }
                 }).catch(function (error) {
@@ -235,6 +236,22 @@
                 let nfc_data = c_points + ';' + c_amount + ';' + datenow + ';' + store_id + ';' + exp_date
 
                 vm.$nfc.writeNdefTag('text', nfc_data)
+            },
+
+            resetFields() {
+                let vm = this
+                vm.show_notif = false;
+                vm.save_result = '';
+                vm.save_message = '';
+
+                vm.cash = ''
+                vm.products = []
+                vm.chosen_products = [{
+                    name: '-',
+                    price: 0,
+                    qty: 0,
+                }]
+                vm.points_settings = {}
             }
 
         },
@@ -245,17 +262,19 @@
                 let data = {
                     'uid': vm.cardinfo.tag_id
                 }
-                vm.$http.post('customer/card', data).then((response) => {
-                    if (response.status == 200) {
-                        let response_data = response.data
-                        if (response_data.result) {
-                            console.log(response_data)
-                            vm.current_user_id = response_data.customer.id
+
+                if (!vm.current_user_id){
+                    vm.$http.post('customer/card', data).then((response) => {
+                        if (response.status == 200) {
+                            let response_data = response.data
+                            if (response_data.result) {
+                                vm.current_user_id = response_data.customer.id
+                            }
                         }
-                    }
-                }).catch(function (error) {
-                    console.log(error)
-                });
+                    }).catch(function (error) {
+                        console.log(error)
+                    });
+                }
             }
         },
 
