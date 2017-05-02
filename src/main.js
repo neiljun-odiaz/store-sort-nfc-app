@@ -9,6 +9,7 @@ import {store} from './store.js'
 import Home from './components/pages/Home.vue'
 import CustomerReg from './components/pages/CustomerReg.vue'
 import CardDetails from './components/pages/CardDetails.vue'
+import POS from './components/pages/POS.vue'
 
 // Admin User
 import Login from './components/auth/Login.vue'
@@ -30,6 +31,18 @@ Vue.use(NFCApp)
 Vue.use(Auth)
 
 Vue.component('modal', Modal)
+
+Vue.filter('currency', function(value){
+    var n = value,
+        c = 2,
+        d = ".",
+        t = ",",
+        s = n < 0 ? "-" : "",
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+})
 
 axios.defaults.baseURL = 'http://localhost:9020/api'
 
@@ -88,6 +101,13 @@ const router = new VueRouter({
         {
             path: '/rewards-setup',
             component: RewardsSetup,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: '/pos',
+            component: POS,
             meta: {
                 forAuth: true
             }

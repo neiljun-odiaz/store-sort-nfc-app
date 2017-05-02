@@ -246,7 +246,7 @@
                             let c_points = response.data.customer.points
                             let c_amount = response.data.customer.amount
                             let store_id = response.data.card.store_id
-                            let nfc_data = c_points + ';' + c_amount + ';' + lastdateupdate + ';' + store_id + ';' + exp_date
+                            let nfc_data = c_points + ';' + c_amount + ';' + datenow + ';' + store_id + ';' + exp_date
 
                             vm.$nfc.writeNdefTag('text', nfc_data)
 

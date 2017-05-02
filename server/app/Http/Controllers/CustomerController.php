@@ -75,4 +75,27 @@ class CustomerController extends Controller
 
             return response($result);
        }
+
+       public function fetchCustomer(Request $request)
+       {
+            $input = $request->all();
+
+            // Check if Card is pre-registered.
+            $card = Card::where('uid', $input['uid'])->first();
+            if (!$card) {
+                $result = array(
+                    'result' => false,
+                    'message' => 'Card Unknown!'
+                );
+                return response($result);
+            }
+
+            $customer = Customer::where('card_id', $card->id)->first();
+            $result = array(
+                'result' => true,
+                'message' => '',
+                'customer' => $customer
+            );
+            return response($result);
+       }
 }

@@ -41,11 +41,11 @@ export default function (Vue){
                             console.log(info)
                             store.state.card_info = {
                                 tag_id: tag_id,
-                                points: info[1],
-                                amount: info[2],
-                                last_updated: info[3],
-                                store_id: info[4],
-                                expiry: info[5]
+                                points: info[0],
+                                amount: info[1],
+                                last_updated: info[2],
+                                store_id: info[3],
+                                expiry: info[4]
                             }
                         }
                     }
@@ -66,11 +66,11 @@ export default function (Vue){
                     var info = ndefValue.split(";")
                     store.state.card_info = {
                         tag_id: tag_id,
-                        points: info[1],
-                        amount: info[2],
-                        last_updated: info[3],
-                        store_id: info[4],
-                        expiry: info[5]
+                        points: info[0],
+                        amount: info[1],
+                        last_updated: info[2],
+                        store_id: info[3],
+                        expiry: info[4]
                     }
                     console.log(ndef)
                     console.log(info)

@@ -7,7 +7,7 @@
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Tool</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Cashless Loading</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Reward Redemption</button>
-                <button class="button is-primary" @click.prevent="goTo('/card-details')">POS</button>
+                <button class="button is-primary" @click.prevent="goTo('/pos')">POS</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Reports</button>
             </div>
         </div>

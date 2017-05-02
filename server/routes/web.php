@@ -23,6 +23,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     // Customer
     $app->post('customer', 'CustomerController@store');
+    $app->post('customer/card', 'CustomerController@fetchCustomer');
 
     // Products
     $app->get('product/all', 'ProductController@index');
@@ -37,4 +38,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     // Rewards Setup
     $app->post('reward', 'RewardController@store');
     $app->get('reward/all', 'RewardController@all');
+
+    // POS
+    $app->post('purchase', 'POSController@store');
 });

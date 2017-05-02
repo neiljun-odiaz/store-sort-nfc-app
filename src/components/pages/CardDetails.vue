@@ -21,12 +21,6 @@
                     </p>
                 </div>
                 <div class="field">
-                    <label class="label">Customer ID</label>
-                    <p class="control">
-                        {{ cardinfo.user_id }}
-                    </p>
-                </div>
-                <div class="field">
                     <label class="label">Store ID</label>
                     <p class="control">
                         {{ cardinfo.store_id }}
