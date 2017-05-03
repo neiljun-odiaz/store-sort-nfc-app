@@ -10,6 +10,7 @@ import Home from './components/pages/Home.vue'
 import CustomerReg from './components/pages/CustomerReg.vue'
 import CardDetails from './components/pages/CardDetails.vue'
 import POS from './components/pages/POS.vue'
+import Cashless from './components/pages/CashLess.vue'
 
 // Admin User
 import Login from './components/auth/Login.vue'
@@ -68,6 +69,14 @@ const router = new VueRouter({
             path: '/card-details',
             component: CardDetails
         },
+        {
+            path: '/pos',
+            component: POS
+        },
+        {
+            path: '/cashless-loading',
+            component: Cashless
+        },
 
         // ======= Admin Routes ======= //
         {
@@ -101,13 +110,6 @@ const router = new VueRouter({
         {
             path: '/rewards-setup',
             component: RewardsSetup,
-            meta: {
-                forAuth: true
-            }
-        },
-        {
-            path: '/pos',
-            component: POS,
             meta: {
                 forAuth: true
             }

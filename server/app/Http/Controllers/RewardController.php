@@ -18,6 +18,8 @@ class RewardController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $result = [];
+
         try {
             $reward = new Reward();
             $reward->description = $input['desc'];
@@ -29,8 +31,57 @@ class RewardController extends Controller
 
             $result = array(
                 'result' => true,
-                'message' => 'Reward Added',
+                'message' => 'Reward Added!',
                 'reward' => $reward
+            );
+        } catch (\Exception $e) {
+            $result = array(
+                'result' => false,
+                'message' => $e->getMessage()
+            );
+        }
+
+        return response($result);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $result = [];
+        $input = $request->all();
+
+        try {
+            $reward = Reward::find($id);
+            $reward->description = $input['description'];
+            $reward->points = $input['points'];
+            $reward->inventory = $input['inventory'];
+            $reward->rewarded = $input['rewarded'];
+            $reward->save();
+
+            $result = array(
+                'result' => true,
+                'message' => 'Reward Updated!',
+                'reward' => $reward
+            );
+        } catch (\Exception $e) {
+            $result = array(
+                'result' => false,
+                'message' => $e->getMessage()
+            );
+        }
+
+        return response($result);
+    }
+
+    public function destroy($id)
+    {
+        $result = [];
+        try {
+            $reward = Reward::find($id);
+            $reward->delete();
+
+            $result = array(
+                'result' => true,
+                'message' => 'Reward Removed!'
             );
         } catch (\Exception $e) {
             $result = array(

@@ -209,8 +209,6 @@
                 vm.show_notif = false
                 vm.reg_message = 'Saving registration...'
 
-                console.log(card_info)
-
                 let datenow = Date.now()
                 let current_date = new Date();
 

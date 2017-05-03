@@ -36,8 +36,10 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     $app->post('settings/fetch', 'SettingController@fetchSetting');
 
     // Rewards Setup
-    $app->post('reward', 'RewardController@store');
-    $app->get('reward/all', 'RewardController@all');
+    $app->get('rewards', 'RewardController@all');
+    $app->post('rewards', 'RewardController@store');
+    $app->patch('rewards/{id}', 'RewardController@update');
+    $app->delete('rewards/{id}', 'RewardController@destroy');
 
     // POS
     $app->post('purchase', 'POSController@store');

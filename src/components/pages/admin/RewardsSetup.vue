@@ -1,10 +1,14 @@
 <template>
     <div>
         <div class="columns">
-            <div class="column is-one-third">
+            <div class="column">
                 <div class="notification" :class="[save_result ? 'is-success' : 'is-danger']" v-show="show_notif">
                     {{ save_message }}
                 </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-one-third">
                 <div class="field">
                     <label class="label">Reward Description</label>
                     <p class="control">
@@ -117,6 +121,7 @@
                     rewarded: 0
                 },
                 tmp_reward: {},
+                reward_index: {},
                 rewards: [],
                 show_notif: false,
                 save_result: '',
@@ -129,10 +134,19 @@
         methods: {
             saveReward() {
                 let vm = this
-                this.$http.post('reward', vm.reward).then((response) => {
-                    if (response.status) {
-                        this.rewards = response.data
+                this.$http.post('rewards', vm.reward).then((response) => {
+                    if (response.data.result) {
+                        vm.rewards.push(response.data.reward)
+                        vm.reward = {
+                            desc: '',
+                            points: 0,
+                            inventory: 0,
+                            rewarded: 0
+                        }
                     }
+                    vm.show_notif = true
+                    vm.save_result = response.data.result
+                    vm.save_message = response.data.message
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -142,20 +156,52 @@
                 let vm = this
                 vm.tmp_reward = reward
                 vm.isUpdating = true
+                vm.reward_index = index
             },
 
             showDeleteModal(reward, index) {
                 let vm = this
                 vm.tmp_reward = reward
                 vm.isDeleting = true
+                vm.reward_index = index
             },
 
             updateReward() {
-                this.closeModal()
+                let vm = this
+                let index = vm.reward_index
+                let reward_id = vm.tmp_reward.id
+                this.$http.patch('rewards/' + reward_id, vm.tmp_reward).then((response) => {
+                    if (response.data.result) {
+                        vm.rewards[index] = response.data.reward
+                        vm.tmp_reward = {}
+                        vm.closeModal()
+                    }
+                    vm.show_notif = true
+                    vm.save_result = response.data.result
+                    vm.save_message = response.data.message
+                }).catch(function (error) {
+                    console.log(error);
+                });
             },
 
             deleteReward() {
-                this.closeModal()
+                let vm = this
+                let index = vm.reward_index
+                let reward_id = vm.tmp_reward.id
+                vm.$http.delete('rewards/' + reward_id, vm .tmp_reward).then((response) => {
+                    console.log(response)
+                    if (response.data.result) {
+                        vm.rewards.splice(index, 1)
+                        vm.closeModal()
+                    }
+                    vm.show_notif = true
+                    vm.save_result = response.data.result
+                    vm.save_message = response.data.message
+                }).catch(function (error) {
+                    vm.show_notif = true
+                    vm.save_result = false
+                    vm.save_message = error
+                });
             },
 
             closeModal() {
@@ -166,7 +212,7 @@
         },
 
         created() {
-            this.$http.get('reward/all').then((response) => {
+            this.$http.get('rewards').then((response) => {
                 if (response.status) {
                     this.rewards = response.data
                 }

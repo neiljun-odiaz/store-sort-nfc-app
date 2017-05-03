@@ -5,7 +5,7 @@
                 <button class="button is-primary" @click.prevent="goTo('/customer-reg')">Customer Registration</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Details</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Tool</button>
-                <button class="button is-primary" @click.prevent="goTo('/card-details')">Cashless Loading</button>
+                <button class="button is-primary" @click.prevent="goTo('/cashless-loading')">Cashless Loading</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Reward Redemption</button>
                 <button class="button is-primary" @click.prevent="goTo('/pos')">POS</button>
                 <button class="button is-primary" @click.prevent="goTo('/card-details')">Reports</button>
