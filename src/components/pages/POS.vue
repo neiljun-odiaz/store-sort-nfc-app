@@ -227,8 +227,8 @@
                  * Format: {points};{amount};{timestamp};{storeid};{day-month-year}
                  */
 
-                let c_points = vm.pointsAcc + vm.cardinfo.points
-                let c_amount = vm.cardinfo.points
+                let c_points = parseInt(vm.pointsAcc) + parseInt(vm.cardinfo.points)
+                let c_amount = parseInt(vm.amount) + parseInt(vm.cardinfo.amount)
                 let store_id = vm.cardinfo.store_id
                 let exp_date = vm.cardinfo.expiry
                 let datenow = Date.now()

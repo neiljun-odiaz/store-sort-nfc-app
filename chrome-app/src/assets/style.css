@@ -1,6 +1,12 @@
 @import url(./normalize.css);
 @import url(./bulma.css);
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 .login-form {
     margin-top: 3em;
 }
