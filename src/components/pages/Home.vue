@@ -2,23 +2,29 @@
     <div>
         <div class="columns is-mobile is-centered">
             <div class="column has-text-centered">
-                <button class="button is-primary" @click.prevent="goTo('/customer-reg')">Customer Registration</button>
-                <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Details</button>
-                <button class="button is-primary" @click.prevent="goTo('/card-details')">Card Tool</button>
-                <button class="button is-primary" @click.prevent="goTo('/cashless-loading')">Cashless Loading</button>
-                <button class="button is-primary" @click.prevent="goTo('/card-details')">Reward Redemption</button>
-                <button class="button is-primary" @click.prevent="goTo('/pos')">POS</button>
-                <button class="button is-primary" @click.prevent="goTo('/card-details')">Reports</button>
-            </div>
-        </div>
-        <div class="columns is-mobile is-centered">
-            <div class="column has-text-centered">
-                <button class="button is-warning" @click.prevent="goTo('/products')">Product</button>
-                <button class="button is-warning" @click.prevent="goTo('/import-card')">Import Cards</button>
-                <button class="button is-warning" @click.prevent="goTo('/points-setup')">Points Setup</button>
-                <button class="button is-warning" @click.prevent="goTo('/rewards-setup')">Rewards Setup</button>
-                <button class="button is-warning" @click.prevent="goTo('/admin-reports')">Reports</button>
-                <button class="button is-warning" @click.prevent="goTo('/user-setup')">Users</button>
+                <div class="section">
+                    <div class="page-buttons" @click.prevent="goTo('/customer-reg')">
+                        <p>Customer Registration</p>
+                    </div>
+                    <div class="page-buttons" @click.prevent="goTo('/card-details')">
+                        <p>Card Tool</p>
+                    </div>
+                    <div class="page-buttons" @click.prevent="goTo('/cashless-loading')">
+                        <p>Cashless Loading</p>
+                    </div>
+                    <div class="page-buttons" @click.prevent="goTo('/rewards-redeem')">
+                        <p>Reward Redemption</p>
+                    </div>
+                    <div class="page-buttons" @click.prevent="goTo('/pos')">
+                        <p>POS</p>
+                    </div>
+                    <div class="page-buttons" @click.prevent="goTo('/customer-list')">
+                        <p>Customer List</p>
+                    </div>
+                    <div class="page-buttons" @click.prevent="goTo('/card-details')">
+                        <p>Reports</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

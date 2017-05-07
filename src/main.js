@@ -11,6 +11,8 @@ import CustomerReg from './components/pages/CustomerReg.vue'
 import CardDetails from './components/pages/CardDetails.vue'
 import POS from './components/pages/POS.vue'
 import Cashless from './components/pages/CashLess.vue'
+import CustomerList from './components/pages/CustomerList.vue'
+import RewardRedeem from './components/pages/RewardRedemption.vue'
 
 // Admin User
 import Login from './components/auth/Login.vue'
@@ -47,13 +49,12 @@ Vue.filter('currency', function(value){
 
 axios.defaults.baseURL = 'http://localhost:9020/api'
 
-// TODO: Uncomment for Production
-// Vue.auth.isAuthenticated().then((result)=>{
-//     if (result) {
-//         let auth_token = JSON.parse(result)
-//         axios.defaults.headers.common['Authorization'] = auth_token.value
-//     }
-// });
+Vue.auth.isAuthenticated().then((result)=>{
+    if (result) {
+        let auth_token = JSON.parse(result)
+        axios.defaults.headers.common['Authorization'] = auth_token.value
+    }
+});
 
 const router = new VueRouter({
     routes: [
@@ -76,6 +77,14 @@ const router = new VueRouter({
         {
             path: '/cashless-loading',
             component: Cashless
+        },
+        {
+            path: '/customer-list',
+            component: CustomerList
+        },
+        {
+            path: '/rewards-redeem',
+            component: RewardRedeem
         },
 
         // ======= Admin Routes ======= //
@@ -121,23 +130,23 @@ const router = new VueRouter({
     ]
 })
 
-// TODO: Uncomment for Production
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some(record => record.meta.forAuth)) {
-//         let is_auth = Vue.auth.isAuthenticated()
-//         is_auth.then((result)=>{
-//             if (!result) {
-//                 next({
-//                     path: '/login'
-//                 })
-//             } else {
-//                 next()
-//             }
-//         });
-//     } else {
-//         next()
-//     }
-// })
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.forAuth)) {
+        let is_auth = Vue.auth.isAuthenticated()
+        is_auth.then((result)=>{
+            if (!result) {
+                next({
+                    path: '/login'
+                })
+            } else {
+                next()
+            }
+        });
+    } else {
+        next()
+    }
+})
 
 new Vue({
     el: '#app',

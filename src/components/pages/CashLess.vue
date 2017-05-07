@@ -96,12 +96,30 @@
                 // Save Transaction
                 // Update card 
                 let vm = this
+                let data = {
+                    type: 'cashless',
+                    description: 'New cashless loading added',
+                    value: {
+                        customer: vm.current_user_id,
+                        amount: parseInt(vm.amount),
+                        points: parseInt(vm.pointsAcc)
+                    }
+                }
 
-                vm.show_notif = true
-                vm.save_result = true
-                vm.save_message = 'Saved!'
-
-                vm.updateCardInfo()
+                vm.$http.post('transaction', data).then((response) => {
+                    if (response.status == 200) {
+                        let response_data = response.data
+                        vm.save_result = response_data.result
+                        vm.save_message = response_data.message
+                        vm.updateCardInfo()
+                        vm.show_notif = true
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                    vm.save_result = false
+                    vm.save_message = error
+                    vm.show_notif = true
+                });
             },
 
             updateCardInfo() {

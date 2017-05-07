@@ -16,13 +16,18 @@ $app->get('/', function () use ($app) {
 });
 
 //TODO: For Admin routes, wrap it with auth middleware
+$app->group(['prefix' => 'api'], function () use ($app) {
+    $app->post('auth/login', 'UserController@login');
+});
 
 $app->group(['prefix' => 'api'], function () use ($app) {
     // Cards
     $app->post('card/import', 'CardController@import');
+    $app->post('cardcheck', 'CardController@check');
 
     // Customer
     $app->post('customer', 'CustomerController@store');
+    $app->get('customers', 'CustomerController@index');
     $app->post('customer/card', 'CustomerController@fetchCustomer');
 
     // Products
@@ -43,4 +48,7 @@ $app->group(['prefix' => 'api'], function () use ($app) {
 
     // POS
     $app->post('purchase', 'POSController@store');
+
+    // Transaction
+    $app->post('transaction', 'TransactionController@store');
 });

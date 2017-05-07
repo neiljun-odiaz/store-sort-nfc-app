@@ -35,20 +35,33 @@
 
         methods: {
             login() {
+                let vm = this
                 let data = {
-                    'username': this.username,
-                    'password': this.password,
+                    'username': vm.username,
+                    'password': vm.password,
                 }
-                this.$http.post('auth/login',data).then((response) => {
+                vm.$http.post('auth/login',data).then((response) => {
                     let response_data = response.data
                     if (response_data.result) {
                         let user_data = response_data.user
-                        this.$auth.setToken(user_data.api_token)
-                        this.$router.push('/admin')
+                        vm.$auth.setToken(user_data.api_token).then((result) => {
+                            console.log(result)
+                            console.log('Authenticated!')
+                            vm.$store.state.isAuth = true
+                            vm.$router.push('/admin')
+                        });
                     } else {
                         alert(response_data.message)
                     }
                 })
+            }
+        },
+
+        created() {
+            // Check if already authenticated
+            if (this.$store.state.isAuth) {
+                console.log('login: ', this.$store.state.isAuth)
+                this.$router.push('/admin')
             }
         }
     }

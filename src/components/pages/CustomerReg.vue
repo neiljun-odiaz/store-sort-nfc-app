@@ -8,7 +8,7 @@
                 <div class="field">
                     <label class="label">Card ID</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="cardinfo.tag_id">
+                        {{ cardinfo.tag_id }}
                     </p>
                 </div>
                 <div class="field">
@@ -40,37 +40,37 @@
                 <div class="field">
                     <label class="label">Customer First Name</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.firstname">
+                        <input class="input" type="text" v-model="card.firstname" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Customer Last Name</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.lastname">
+                        <input class="input" type="text" v-model="card.lastname" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">PIN</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.pin">
+                        <input class="input" type="number" maxlength="4" v-model="card.pin" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Re-enter PIN</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.repin">
+                        <input class="input" type="number" maxlength="4" v-model="card.repin" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Contact No.</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.contact">
+                        <input class="input" type="number" v-model="card.contact" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Email Address</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.email">
+                        <input class="input" type="email" v-model="card.email" :disabled="!valid_card">
                     </p>
                 </div>
             </div>
@@ -78,20 +78,20 @@
                 <div class="field">
                     <label class="label">Address</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.address">
+                        <input class="input" type="text" v-model="card.address" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Age</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.age">
+                        <input class="input" type="number" maxlength="2" v-model="card.age" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Sex</label>
                     <p class="control">
                         <span class="select">
-                            <select v-model="card.sex" required>
+                            <select v-model="card.sex" :disabled="!valid_card" required>
                                 <option value=""></option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -102,14 +102,14 @@
                 <div class="field">
                     <label class="label">Birthdate</label>
                     <p class="control">
-                        <input class="input" type="text" v-model="card.birthdate">
+                        <input class="input" type="text" v-model="card.birthdate" :disabled="!valid_card">
                     </p>
                 </div>
                 <div class="field">
                     <label class="label">Civil Status</label>
                     <p class="control">
                         <span class="select">
-                            <select v-model="card.civilstatus" required>
+                            <select v-model="card.civilstatus" :disabled="!valid_card" required>
                                 <option value=""></option>
                                 <option value="Single">Single</option>
                                 <option value="Married">Married</option>
@@ -157,6 +157,8 @@
                     birthdate: '',
                     civilstatus: ''
                 },
+                cardtag_id: '',
+                valid_card: false,
                 show_notif: false,
                 reg_result: '',
                 reg_message: ''
@@ -165,11 +167,12 @@
 
         computed: {
             cardinfo() {
-                return this.$store.state.card_info;
+                this.cardtag_id = this.$store.state.card_info.tag_id
+                return this.$store.state.card_info
             },
 
             deviceinfo() {
-                return this.$store.state.device_info;
+                return this.$store.state.device_info
             },
 
             date_registration() {
@@ -260,6 +263,26 @@
                     vm.show_notif = true
                     vm.reg_result = false
                     vm.reg_message = error
+                });
+            }
+        },
+
+        watch: {
+            cardtag_id() {
+                let vm = this
+
+                // Check if Card was detected or card is registered
+                let card_info = {
+                    tagid: vm.cardinfo.tag_id
+                }
+
+                vm.$http.post('cardcheck', card_info).then((response) => {
+                    console.log(response.data)
+                    if (response.data.result) {
+                        vm.valid_card = true
+                    } else {
+                        vm.valid_card = false
+                    }
                 });
             }
         },

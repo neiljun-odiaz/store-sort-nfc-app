@@ -21,6 +21,32 @@ class CardController extends Controller
         return response($cards);
     }
 
+    public function check(Request $request)
+    {
+        $input = $request->all();
+        $result = [];
+        try {
+            $card = Card::where('uid', $input['tagid'])->first();
+            if (!empty($card)){
+                $result = array(
+                    'result' => true,
+                    'message' => 'Card is valid'
+                );
+            } else {
+                $result = array(
+                    'result' => false,
+                    'message' => 'Card is invalid'
+                );
+            }
+        } catch(\Exception $e) {
+            $result = array(
+                    'result' => false,
+                    'message' => $e->getMessage()
+                );
+        }
+        return response($result);
+    }
+
     public function import(Request $request)
     {
         try {

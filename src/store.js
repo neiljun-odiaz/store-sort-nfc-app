@@ -11,6 +11,8 @@ export const store = new Vuex.Store({
             product_id: ''
         },
 
+        isAuth: false,
+
         // {points};{amount};{timestamp};{storeid};{expiry}
 
         card_info: {
